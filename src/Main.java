@@ -43,6 +43,7 @@ public class Main {
         };
         Supplier<Double> supplier1 = () -> Math.random()*100;
     }
+        //Задание 5
     public static <T, U> Function<T, U> ternaryOperator(
             Predicate<? super T> condition,
             Function<? super T, ? extends U> ifTrue,
