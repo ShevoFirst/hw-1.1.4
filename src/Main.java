@@ -22,9 +22,8 @@ public class Main {
             }
         };
 
-        Consumer<String> consumer1 = s -> {
-            System.out.println(s);
-        };
+        Consumer<String> consumer1 = s -> System.out.println(s);
+
         //Задание 3.
         Function<Double,Long> function = new Function<Double, Long>() {
             @Override
@@ -33,7 +32,7 @@ public class Main {
             }
         };
 
-        Function<Double,Long> function1 = aDouble -> aDouble.longValue();
+        Function<Double,Long> function1 = Double::longValue;
         //Задание 4
         Supplier<Double> supplier = new Supplier<Double>() {
             @Override
@@ -42,15 +41,20 @@ public class Main {
             }
         };
         Supplier<Double> supplier1 = () -> Math.random()*100;
+
+        Function<Integer, String> checkEven = ternaryOperator(
+                n -> n == 0,
+                n -> "равен нулю",
+                n -> "не равен нулю"
+        );
+        System.out.println(checkEven.apply(0));
     }
         //Задание 5
-    public static <T, U> Function<T, U> ternaryOperator(
-            Predicate<? super T> condition,
-            Function<? super T, ? extends U> ifTrue,
-            Function<? super T, ? extends U> ifFalse) {
-
-        return t -> condition.test(t) ? ifTrue.apply(t):ifFalse.apply(t);//mo
-
-    }
+        public static <T, U> Function<T, U> ternaryOperator(
+                Predicate<? super T> condition,
+                Function<? super T, ? extends U> ifTrue,
+                Function<? super T, ? extends U> ifFalse) {
+            return t -> condition.test(t) ? ifTrue.apply(t) : ifFalse.apply(t);
+        }
 
 }
