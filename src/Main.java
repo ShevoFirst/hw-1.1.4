@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.*;
 import java.util.stream.Stream;
 
@@ -77,9 +78,12 @@ public class Main {
                 Comparator<? super T> order,
                 BiConsumer<? super T, ? super T> minMaxConsumer
         ){
-            if (stream.count() == 0)
+            Optional<? extends T> min = stream.min(order);
+            Optional<? extends T> max = stream.max(order);
+            if (min.isPresent() && max.isPresent())
+                minMaxConsumer.accept(min.get(),max.get());
+            else {
                 minMaxConsumer.accept(null,null);
-            else
-                minMaxConsumer.accept(stream.min(order).get(),stream.max(order).get());
+            }
         }
 }
