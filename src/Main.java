@@ -1,7 +1,9 @@
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.*;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -48,8 +50,22 @@ public class Main {
                 n -> "не равен нулю"
         );
         System.out.println(checkEven.apply(0));
+
+        List<Integer> list = new ArrayList<>();
+        list.add(4);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(1);
+
+        findMinMax(
+                list.stream(),
+                Integer::compareTo,
+                (integer, integer2) -> System.out.println(integer +" "+ integer)
+        );
     }
-        //Задание 5
+
+    //Задание 5
         public static <T, U> Function<T, U> ternaryOperator(
                 Predicate<? super T> condition,
                 Function<? super T, ? extends U> ifTrue,
@@ -57,4 +73,17 @@ public class Main {
             return t -> condition.test(t) ? ifTrue.apply(t) : ifFalse.apply(t);
         }
 
+        public static <T> void findMinMax(
+                Stream<? extends T> stream,
+                Comparator<? super T> order,
+                BiConsumer<? super T, ? super T> minMaxConsumer
+        ){
+            Optional<? extends T> min = stream.min(order);
+            Optional<? extends T> max = stream.max(order);
+            if (min.isPresent() && max.isPresent())
+                minMaxConsumer.accept(min.get(),max.get());
+            else {
+                minMaxConsumer.accept(null,null);
+            }
+        }
 }
